@@ -1,0 +1,186 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;  /* Center vertically */
+  height: 100px;  /* Full viewport height */
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 900px;  /* Reduced width for a more compact design */
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dashboard-container h1 {
+  font-size: 1.8rem;
+  color: #4c739b;
+  margin-bottom: 20px;  /* Reduced margin */
+}
+
+.form-and-events {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;  /* Allows responsiveness on smaller screens */
+}
+
+.event-form-container, .approved-events-container {
+  flex: 1;
+  min-width: 280px;  /* Reduced width for more compact design */
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;  /* Spacing between form and approved events */
+}
+
+.event-form input,
+.event-form select,
+.event-form textarea {
+  width: 100%;
+  max-width: 360px;  /* Slightly smaller width */
+  padding: 10px;
+  margin: 8px 0;  /* Reduced margin */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;  /* Slightly smaller font */
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.event-form input:focus,
+.event-form select:focus,
+.event-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.event-form button {
+  width: 100%;
+  max-width: 360px;  /* Same width for buttons */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+}
+
+.event-form button:hover {
+  background-color: #0056b3;
+}
+
+.event-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;  /* Reduced gap between events */
+  justify-content: center;
+}
+
+.event-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  width: 240px;  /* Smaller width for event cards */
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+}
+
+.event-card h3 {
+  font-size: 1.3rem;  /* Reduced font size */
+  color: #4c739b;
+  margin-bottom: 8px;  /* Reduced margin */
+}
+
+.event-card p {
+  font-size: 0.95rem;  /* Smaller font size */
+  color: #555;
+}
+
+.event-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.event-card button:hover {
+  background-color: #0056b3;
+}
+
+button {
+  cursor: pointer;
+}
+
+.logout-button {
+  margin-top: 20px; /* Adjust this value as needed for the space above the button */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
+}
+
+.profile-link-card {
+  text-decoration: none; /* Remove link underline */
+  color: inherit;  /* Inherit color from parent */
+  display: inline-block;  /* Make the link a block-level element */
+  width: 100%;
+  max-width: 350px;  /* Adjust to match event card width */
+  margin-bottom: 20px;  /* Space between elements */
+}
+
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);  /* Card hover effect */
+}
+
+.profile-card h3 {
+  font-size: 1.3rem;  /* Adjusted font size */
+  color: #4c739b;
+  margin-bottom: 8px;
+}
+
+.profile-card p {
+  font-size: 1rem;
+  color: #555;
+}
