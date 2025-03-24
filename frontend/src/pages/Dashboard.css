@@ -1,75 +1,112 @@
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
   display: flex;
-  justify-content: center;  /* Center horizontally */
-  align-items: center;  /* Center vertically */
-  height: 100px;  /* Full viewport height */
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Center vertically */
 }
 
+/* Dashboard Container */
 .dashboard-container {
+  max-width: 1200px;
   width: 100%;
-  max-width: 900px;  /* Reduced width for a more compact design */
   padding: 20px;
-  background: white;
+  background-color: white;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
   text-align: center;
 }
 
-.dashboard-container h1 {
-  font-size: 1.8rem;
-  color: #4c739b;
-  margin-bottom: 20px;  /* Reduced margin */
+/* Header Section */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 20px;
 }
 
+.profile-link-card {
+  display: inline-block;
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 20px;
+}
+
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+}
+
+.profile-card h3 {
+  font-size: 1.3rem;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+h4{
+  font-size: 1.3rem;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+/* Form and Events Section */
 .form-and-events {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   gap: 20px;
-  flex-wrap: wrap;  /* Allows responsiveness on smaller screens */
+  flex-wrap: wrap;
 }
 
-.event-form-container, .approved-events-container {
+/* Event Form Container */
+.event-form-container {
   flex: 1;
-  min-width: 280px;  /* Reduced width for more compact design */
+  min-width: 280px; /* Allowing form container to be responsive */
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Event Form Styling */
 .event-form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
-  margin-bottom: 20px;  /* Spacing between form and approved events */
 }
 
 .event-form input,
 .event-form select,
 .event-form textarea {
   width: 100%;
-  max-width: 360px;  /* Slightly smaller width */
-  padding: 10px;
-  margin: 8px 0;  /* Reduced margin */
-  border: 1px solid #ccc;
+  padding: 12px;
   border-radius: 8px;
-  font-size: 0.95rem;  /* Slightly smaller font */
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 12px;
   box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-.event-form input:focus,
-.event-form select:focus,
-.event-form textarea:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .event-form button {
   width: 100%;
-  max-width: 360px;  /* Same width for buttons */
-  padding: 10px 20px;
+  padding: 12px 20px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -77,7 +114,6 @@ body {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 15px;
 }
 
 .event-form button:hover {
@@ -87,16 +123,18 @@ body {
 .event-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;  /* Reduced gap between events */
+  gap: 20px;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .event-card {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  width: 240px;  /* Smaller width for event cards */
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
   text-align: center;
   transition: transform 0.3s ease;
 }
@@ -106,13 +144,13 @@ body {
 }
 
 .event-card h3 {
-  font-size: 1.3rem;  /* Reduced font size */
-  color: #4c739b;
-  margin-bottom: 8px;  /* Reduced margin */
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 .event-card p {
-  font-size: 0.95rem;  /* Smaller font size */
+  font-size: 1rem;
   color: #555;
 }
 
@@ -120,24 +158,47 @@ body {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
   padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.95rem;
-  margin-top: 10px;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .event-card button:hover {
   background-color: #0056b3;
 }
 
-button {
-  cursor: pointer;
+
+/* General Comment Section */
+.comments-section {
+  margin-top: 20px;
 }
 
-.logout-button {
-  margin-top: 20px; /* Adjust this value as needed for the space above the button */
+.comment {
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-input {
+  margin-top: 15px;
+}
+
+.comment-input textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.comment-input button {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -148,39 +209,65 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
+.comment-input button:hover {
   background-color: #0056b3;
 }
 
-.profile-link-card {
-  text-decoration: none; /* Remove link underline */
-  color: inherit;  /* Inherit color from parent */
-  display: inline-block;  /* Make the link a block-level element */
-  width: 100%;
-  max-width: 350px;  /* Adjust to match event card width */
-  margin-bottom: 20px;  /* Space between elements */
-}
-
-.profile-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-
-.profile-card:hover {
-  transform: scale(1.05);  /* Card hover effect */
-}
-
-.profile-card h3 {
-  font-size: 1.3rem;  /* Adjusted font size */
-  color: #4c739b;
-  margin-bottom: 8px;
-}
-
-.profile-card p {
-  font-size: 1rem;
+/* Style for "No comments yet" text */
+.comment p {
   color: #555;
+  font-style: italic;
+}
+
+
+/* Popup Message */
+.popup-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: center;
+  animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Logout Button - Out of the Main Container */
+.logout-button {
+  margin-top: 30px;
+  padding: 12px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+footer p {
+  margin: 0;
 }

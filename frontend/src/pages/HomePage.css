@@ -7,13 +7,13 @@ body {
     display: flex;
     justify-content: center;  /* Center the content horizontally */
     align-items: flex-start;  /* Align content to the top */
-    min-height: 2000px;  /* Ensure body stretches the entire height of the screen */
+    min-height: 2600px;  /* Ensure body stretches the entire height of the screen */
     overflow-x: hidden;  /* Prevent horizontal scrolling */
   }
   
   /* Main container for the home page */
   .home-page {
-    /* width: 100%; */
+    /* width: 100%; */  
     max-width: 2400px; /* Ensure a max-width for better layout control */
     padding: 20px;
     background: white;
@@ -64,6 +64,14 @@ body {
   .disaster-info {
     margin-bottom: 40px;
     padding-top: 30px;
+  }
+
+  h2{
+    
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #4c739b;
+  
   }
   
   .disaster-info h2 {

@@ -22,7 +22,8 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
-app.use('/api/events', require('./routes/eventRoutes'));
+app.use('/api/affected-areas', require('./routes/affectedAreaRoutes'));
+app.use('/api/comments', require('./routes/commentRoutes'));
 
 
 app.listen(5001, () => console.log('Server running on port 5001'));

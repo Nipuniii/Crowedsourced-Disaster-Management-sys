@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./Registerpage.css";
 
 function RegisterPage() {
@@ -6,6 +7,7 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ function RegisterPage() {
       const data = await res.json();
       if (res.ok) {
         alert(data.message);
+        navigate('/login'); 
       } else {
         setError(data.error);
       }

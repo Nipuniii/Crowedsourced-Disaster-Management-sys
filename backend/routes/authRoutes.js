@@ -38,7 +38,14 @@ router.post('/register', async (req, res) => {
         console.log("Password incorrect");
         return res.status(401).json({ error: 'Invalid credentials' });
       }
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '2h' });
+
+      const payload = {
+        user: {
+          id: user._id,
+          role: user.role  // Make sure role is included in the payload
+        }
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h' });
       res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
     } catch (error) {
       res.status(500).json({ error: 'Server error' });

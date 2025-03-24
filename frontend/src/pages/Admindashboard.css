@@ -6,7 +6,8 @@ body {
 }
 
 .dashboard-container {
-  max-width: 800px;
+  max-width: 1500px;
+  height: 1400px;
   margin: 30px auto;
   padding: 20px;
   background: white;
@@ -25,6 +26,53 @@ body {
   font-size: 1.3rem;
   color: #4c739b;
   margin-bottom: 20px;
+}
+
+.create-event-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 0 auto;
+}
+
+.create-event-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-event-container input,
+.create-event-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.create-event-container button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.create-event-container button:hover {
+  background-color: #0056b3;
+}
+
+.create-event-container .popup-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 5px;
 }
 
 .event-list {
@@ -57,19 +105,90 @@ body {
   color: #ffffff;
 }
 
+.edit-event-form {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 60%;
+  margin: 0 auto;
+}
+
+.edit-event-form input,
+.edit-event-form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.edit-event-form button {
+  padding: 12px 20px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-event-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Approve Button */
 .approve-button {
   background-color: #28a745;
   color: white;
-  padding: 8px 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-top: 15px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
 }
 
 .approve-button:hover {
   background-color: #218838;
+}
+
+/* Event Details Popup */
+.event-details-popup {
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  height: 60%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.event-details-popup img {
+  width: 100%;
+  height: auto;
+}
+
+.message {
+  color: green;
+  margin-top: 20px;
+}
+
+.logout-button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
 }
 
 button {
@@ -79,7 +198,7 @@ button {
 button.logout {
   background-color: #dc3545;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -96,19 +215,62 @@ button.logout:hover {
   margin-top: 20px;
 }
 
+.logout-button:hover {
+  background-color: #0056b3;
+}
 
-.logout-button {
-  margin-top: 20px; /* Adjust this value as needed for the space above the button */
+
+/* Add this to your AdminDashboard.css */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal background */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Darker background to make text pop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal content box */
+.modal-content {
+  background: #fff;  /* White background for the modal */
+  color: #333;  /* Dark text for better visibility */
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 200px;
+  width: 80%;
+}
+
+/* Button in the modal */
+.modal button {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: 15px;
 }
 
-.logout-button:hover {
+.modal button:hover {
   background-color: #0056b3;
 }

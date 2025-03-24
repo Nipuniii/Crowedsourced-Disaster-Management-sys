@@ -16,15 +16,19 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
-    req.user = decoded;
+    console.log("Decoded User:", decoded); 
+    req.user = decoded.user;
     next();
   } catch (err) {
+    console.error("Token verification failed:", err);
     res.status(400).json({ error: 'Invalid token' });
   }
 };
 
 const adminMiddleware = (req, res, next) => {
+  console.log("Decoded User Info:", req.user);
   if (req.user.role !== 'admin') {
+    console.log("Access Denied: User is not an admin");
     return res.status(403).json({ error: 'Access denied. Admins only.' });
   }
   next(); // Proceed if the user is an admin
