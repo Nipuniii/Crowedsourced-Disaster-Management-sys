@@ -10,6 +10,11 @@ const affectedAreaSchema = new mongoose.Schema({
   },
   image: { type: String, required: false }, 
   date: { type: Date, required: true },
+  eventRadius: { 
+    type: Number, 
+    required: true, 
+    min: 0 // Radius must be a positive number
+  }, 
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Example status
   createdAt: { type: Date, default: Date.now }
 });

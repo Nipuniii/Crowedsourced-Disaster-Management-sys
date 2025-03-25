@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [location, setLocation] = useState({ address: "", latitude: "", longitude: "" });
   const [date, setDate] = useState("");
   const [eventType, setEventType] = useState("volunteer");
+  const [eventRadius, setEventRadius] = useState("");
   const [image, setImage] = useState(null);
   const [eventMessage, setEventMessage] = useState("");
   const [affectedAreas, setAffectedAreas] = useState([]);
@@ -59,6 +60,7 @@ const Dashboard = () => {
     formData.append("location[longitude]", location.longitude);
     formData.append("date", date);
     formData.append("eventType", eventType);
+    formData.append("eventRadius", eventRadius); 
     if (image) formData.append("image", image);
 
     try {
@@ -83,6 +85,7 @@ const Dashboard = () => {
       setLocation({ address: "", latitude: "", longitude: "" });
       setDate("");
       setEventType("volunteer");
+      setEventRadius("");
       setImage(null);
     } catch (error) {
       setEventMessage("Failed to create event.");
@@ -94,12 +97,14 @@ const Dashboard = () => {
     if (token) {
       const fetchUser = async () => {
         try {
-          const res = await fetch("http://localhost:5001/api/auth/me", {
+          const res = await fetch('http://localhost:5001/api/auth/me', {
             headers: { "Authorization": `Bearer ${token}` },
           });
+
           if (res.ok) {
             const data = await res.json();
-            setUser(data.user);
+            console.log("User Data:", data); 
+            setUser(data);
           }
         } catch (err) {
           console.error("Error fetching user data:", err);
@@ -120,6 +125,16 @@ const Dashboard = () => {
       const res = await fetch("http://localhost:5001/api/affected-areas/events");
       const data = await res.json();
       setAffectedAreas(data);
+
+      // Fetch comments for each affected area
+    const affectedAreasWithComments = await Promise.all(data.map(async (area) => {
+      const commentsRes = await fetch(`http://localhost:5001/api/comments/${area._id}`);
+      const commentsData = await commentsRes.json();
+      area.comments = commentsData;
+      return area;
+    }));
+
+    setAffectedAreas(affectedAreasWithComments);
     } catch (error) {
       console.error("Error fetching affected areas:", error);
     }
@@ -181,7 +196,10 @@ const Dashboard = () => {
             <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
               <option value="volunteer">Volunteer</option>
               <option value="aid">Aid</option>
+              <option value="disaster">Disaster</option>
             </select>
+            <input type="number" placeholder="Event Radius (in meters)" value={eventRadius} onChange={(e) => setEventRadius(e.target.value)} required />
+            <label>Upload Evidences (Images)</label>
             <input type="file" accept="image/*" onChange={handleImageUpload} />
             <button type="submit">Submit Event</button>
           </form>
@@ -194,56 +212,50 @@ const Dashboard = () => {
         </div>
 
         
-        <div className="event-list">
-        <h2>Affected areas near you</h2>
-        {affectedAreas.map((area) => (
-          
-  <div key={area._id} className="event-card">
-  
-    <h3>{area.title}</h3>
-    <p>{area.description}</p>
-    <img src={`http://localhost:5001/${area.image}`} alt={area.title} className="event-image" />
-    <p><strong>Location:</strong> {area.location.address}</p>
-    <p><strong>Date:</strong> {new Date(area.date).toLocaleDateString()}</p>
+  <div className="event-list">
+    <h2>Affected areas near you</h2>
 
-    {/* Comments Section */}
-    {/* Display Comments for each affected area */}
-{/* Comments Section */}
-<div className="comments-section">
-  <h4>Comments</h4>
-  {area.comments && area.comments.length > 0 ? (
-    area.comments.map((comment) => (
-      <div key={comment._id}>
-        <strong>{comment.user.name}:</strong> {comment.text}
+  {affectedAreas.map((area) => (
+    <div key={area._id} className="event-card">
+      <h3>{area.title}</h3>
+      <p>{area.description}</p>
+      <img src={`http://localhost:5001/${area.image}`} alt={area.title} className="event-image" />
+      <p><strong>Location:</strong> {area.location.address}</p>
+      <p><strong>Date:</strong> {new Date(area.date).toLocaleDateString()}</p>
+
+      <div className="comments-section">
+        <h4>Comments</h4>
+        {area.comments && area.comments.length > 0 ? (
+          area.comments.map((comment) => (
+            <div key={comment._id}>
+              <strong>{comment.user.name}:</strong> {comment.text}
+            </div>
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
+        
+        {/* Comment Input */}
+        {user && (
+          <div className="comment-input">
+            <textarea 
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment"
+            />
+            <button onClick={() => handleAddComment(area._id)}>Add Comment</button>
+          </div>
+        )}
+        {!user && <p>Please log in to add comments.</p>}
       </div>
-    ))
-  ) : (
-    <p>No comments yet.</p>
-  )}
-
-  {/* Display comment input field if logged in */}
-  {user ? (
-    <div className="comment-input">
-      <textarea 
-        value={newComment}
-        onChange={(e) => setNewComment(e.target.value)}
-        placeholder="Add a comment"
-      />
-      <button onClick={() => handleAddComment(area._id)}>Add Comment</button>
     </div>
-  ) : (
-    <p>Please log in to add comments.</p>
-  )}
+  ))}
 </div>
 
 
-  </div>
-))}
-
-        </div>
 
         <div className="approved-events-container">
-          <h2>Approved Aid/Volunteer Events</h2>
+          <h2>Approved Aid/Volunteer/Disaster Events</h2>
           <div className="event-list">
             {events.map(event => (
               <div key={event._id} className="event-card">
@@ -251,6 +263,7 @@ const Dashboard = () => {
                 <p>{event.description}</p>
                 <p><strong>Location:</strong> {event.location.address}</p>
                 <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                {event.image && <img src={`http://localhost:5001/${event.image}`} alt={event.title} className="event-image" />}
                 <button>View Details</button>
               </div>
             ))}
@@ -259,6 +272,27 @@ const Dashboard = () => {
       </div>
 
       <button onClick={handleLogout} className="logout-button">Logout</button>
+
+      <div className="alert-message">
+  If you are gathering volunteers to help in need, make sure to coordinate with the local administration.
+</div>
+
+<footer className="home-footer">
+
+  <div className="footer-contact-info">
+    <p><strong>Call Center:</strong> 117</p>
+    <p><strong>General:</strong> +94 112 136 136</p>
+    <p><strong>Emergency Operation Center:</strong> +94 112 136 222 / +94 112 670 002</p>
+    <p><strong>Fax:</strong> +94 11 2670079</p>
+  </div>
+
+  
+  <div className="footer-links">
+    <p><a href="https://meteo.gov.lk/index.php?option=com_content&view=article&id=9&Itemid=289&lang=en" target="_blank" rel="noopener noreferrer">Weather Forecast Department</a></p>
+    <p><a href="https://www.dmc.gov.lk/index.php?lang=en" target="_blank" rel="noopener noreferrer">Disaster Management Centre</a></p>
+  </div>
+  <p>&copy; 2025 Disaster Management System | All Rights Reserved</p>
+</footer>
     </div>
   );
 };

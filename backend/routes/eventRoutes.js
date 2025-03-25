@@ -27,12 +27,12 @@ const upload = multer({
 // User: Create an event (Pending Approval)
 router.post("/create", authMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, location, date, eventType } = req.body;
+    const { title, description, location, date, eventType, eventRadius} = req.body;
     console.log("Request Body:", req.body); 
     const image = req.file ? req.file.path : null;
     console.log("Uploaded File:", req.file);
 
-    if (!title || !description || !location || !date || !eventType) {
+    if (!title || !description || !location || !date || !eventType || !eventRadius) {
       return res.status(400).json({ error: "All fields are required" });
     }    
 
@@ -48,7 +48,7 @@ router.post("/create", authMiddleware, upload.single("image"), async (req, res) 
         latitude: location.latitude,
         longitude: location.longitude
       },
-      date, eventType, image, 
+      date, eventType, image, eventRadius,
       createdBy: req.user.id, status: "pending" 
     });
     await event.save();

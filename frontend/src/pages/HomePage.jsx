@@ -19,7 +19,7 @@ const HomePage = () => {
         const data = await res.json();
         if (res.ok) {
           setApprovedEvents(data);
-          initMap(data); 
+          // initMap(data); 
         }
       } catch (error) {
         console.error("Error fetching approved events:", error);
@@ -50,19 +50,39 @@ const HomePage = () => {
   
     // Loop through both event types (affected and volunteer) and add markers
     events.forEach((event) => {
-      const isAffectedArea = event.title.includes("Flooding") || event.title.includes("Disaster");  // This is just an example condition
+      console.log('Event:', event);
+      console.log('Event Location:', event.location);
+      const isAffectedArea = event.title.includes("Affected area") || event.title.includes("Disaster");  // This is just an example condition
   
       // Set a different marker icon based on event type
       const markerIcon = isAffectedArea
         ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png"  // Red marker for affected area
         : "http://maps.google.com/mapfiles/ms/icons/green-dot.png"; // Green marker for aid/volunteer
+
+      // Check if latitude and longitude are available for the event
+    const lat = event.location.latitude;
+    const lng = event.location.longitude;
   
+    if (lat && lng) {
       // Create the marker for the event
       const marker = new window.google.maps.Marker({
-        position: { lat: event.location.latitude, lng: event.location.longitude },
+        position: { lat, lng },
         map: map,
         title: event.title,
         icon: markerIcon,  // Use the appropriate icon based on the event type
+      });
+
+      // Create a circle to represent the perimeter of the event area (radius in meters)
+      const eventRadius = event.eventRadius || 5000;  // Example: 5 km radius (can be customized per event)
+      const circle = new window.google.maps.Circle({
+        map: map,
+        radius: eventRadius, // Radius in meters
+        center: { lat, lng },
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
       });
   
       const infoWindow = new window.google.maps.InfoWindow({
@@ -78,6 +98,7 @@ const HomePage = () => {
       marker.addListener("click", () => {
         infoWindow.open(map, marker);
       });
+    }
     });
   };
   
@@ -139,7 +160,16 @@ const HomePage = () => {
       const res = await fetch("http://localhost:5001/api/affected-areas/events");
       const data = await res.json();
       setAffectedAreas(data);
-      initMap(data);
+
+      const affectedAreasWithComments = await Promise.all(data.map(async (area) => {
+        const commentsRes = await fetch(`http://localhost:5001/api/comments/${area._id}`);
+        const commentsData = await commentsRes.json();
+        area.comments = commentsData;
+        return area;
+      }));
+  
+      setAffectedAreas(affectedAreasWithComments);
+      // initMap(data);
     } catch (error) {
       console.error("Error fetching affected areas:", error);
     }
@@ -213,22 +243,34 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Disaster Management Tips Section */}
-      <section className="management-tips">
-        <h2>Disaster Management Tips</h2>
-        <ul>
-          <li><strong>Prepare an Emergency Kit:</strong> Keep essentials like water, food, medications, and documents ready for emergencies.</li>
-          <li><strong>Stay Informed:</strong> Stay updated with the latest disaster alerts and warnings through official channels.</li>
-          <li><strong>Have an Evacuation Plan:</strong> Know multiple routes out of your area and establish a meeting place for family members.</li>
-          <li><strong>Learn First Aid:</strong> Be equipped to assist others during a disaster with basic first aid knowledge.</li>
-        </ul>
-      </section>
+      <section className="preparedness-planning">
+  <h2>Preparedness Planning</h2>
+  <ul>
+    <li>Preparation, reviewing and updating National Disaster Management Plan and National emergency Operation Plan</li>
+    <li>Coordinating, directing and monitoring of preparation of disaster preparedness and response plans at provincial, district, local authority, divisional and Grama Niladhari levels</li>
+    <li>Coordinate and assist health authorities on preparation of preparedness plans for emergency response for hospitals</li>
+    <li>Coordinate and assist Ministry of Education for implementing the School Disaster Safety Programme</li>
+    <li>Strengthening Local Authorities for emergency response</li>
+    <li>Development of response plans for different hazards such as cyclone, floods, landslides etc</li>
+    <li>Identification of vulnerable communities for different hazards and implement preparedness activities to ensure the safety of people during disasters</li>
+    <ul>
+      <li>Formation of disaster management committees and sub committees</li>
+      <li>Awareness on disaster management, hazards, vulnerability</li>
+      <li>Preparation of hazard map for the village showing safe locations, safe routes, etc</li>
+      <li>Conducting mock drills</li>
+      <li>Distribution of equipment such as megaphones for early warning dissemination within the village</li>
+      <li>Distribution of equipment such as boats, anguls for emergency response</li>
+    </ul>
+  </ul>
+</section>
+
 
       <section className="map-section">
         <div id="map" style={{ width: "100%", height: "400px" }}></div>
       </section>  
 
       <h2>Affected areas </h2>
+      <div className="affected-area-cards">
       {affectedAreas.map((area) => (
             <div key={area._id} className="event-card">
               <h3>{area.title}</h3>
@@ -238,21 +280,26 @@ const HomePage = () => {
               <p><strong>Date:</strong> {new Date(area.date).toLocaleDateString()}</p>
 
               {/* Comments Section */}
-              <div>
+              <div className="comments-section">
                 <h4>Comments</h4>
-                {area.comments && area.comments.map((comment) => (
-                  <div key={comment._id}>
-                    <strong>{comment.user.name}:</strong> {comment.text}
-                  </div>
-                ))}
+                {area.comments && area.comments.length > 0 ? (
+          area.comments.map((comment) => (
+            <div key={comment._id}>
+              <strong>{comment.user.name}:</strong> {comment.text}
+            </div>
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
           </div>
         </div>
       ))}
+      </div>
 
       {/* Display the Approved Events */}
       <section className="approved-events">
-        <h2>Approved Aid/Volunteer Events</h2>
-        <div className="event-list">
+        <h2>Approved Aid/Volunteer/Disaster Events</h2>
+        <div className="approved-event-cards">
           {approvedEvents.length === 0 ? (
             <p>No approved events available at the moment.</p>
           ) : (
@@ -262,18 +309,38 @@ const HomePage = () => {
                 <p>{event.description}</p>
                 {event.image && <img src={`http://localhost:5001/${event.image}`} alt={event.title} className="event-image" />}
                 <p><strong>Location:</strong> {event.location.address}</p>
+                <p><strong>Event Type:</strong> {event.eventType}</p>
                 <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                <a href={`/event/${event._id}`} className="view-details-button">View Details</a>
+                {/* <a href={`/event/${event._id}`} className="view-details-button">View Details</a> */}
               </div>
             ))
           )}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="home-footer">
-        <p>&copy; 2025 Disaster Management System | All Rights Reserved</p>
-      </footer>
+      <div className="alert-message">
+  If you are gathering volunteers to help in need, make sure to coordinate with the local administration.
+</div>
+
+<footer className="home-footer">
+  
+  
+  
+  <div className="footer-contact-info">
+    <p><strong>Call Center:</strong> 117</p>
+    <p><strong>General:</strong> +94 112 136 136</p>
+    <p><strong>Emergency Operation Center:</strong> +94 112 136 222 / +94 112 670 002</p>
+    <p><strong>Fax:</strong> +94 11 2670079</p>
+  </div>
+
+  
+  <div className="footer-links">
+    <p><a href="https://meteo.gov.lk/index.php?option=com_content&view=article&id=9&Itemid=289&lang=en" target="_blank" rel="noopener noreferrer">Weather Forecast Department</a></p>
+    <p><a href="https://www.dmc.gov.lk/index.php?lang=en" target="_blank" rel="noopener noreferrer">Disaster Management Centre</a></p>
+  </div>
+  <p>&copy; 2025 Disaster Management System | All Rights Reserved</p>
+</footer>
+
     </div>
   );
 };

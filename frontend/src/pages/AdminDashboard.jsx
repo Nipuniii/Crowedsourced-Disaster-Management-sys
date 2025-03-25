@@ -13,6 +13,7 @@ const AdminDashboard = () => {
       longitude: ""
     },
     date: "",
+    eventRadius: "",
     image: null
   });
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -36,6 +37,10 @@ const AdminDashboard = () => {
     setPendingEvents(data);
   };
 
+  
+  
+  
+
   // Handle new event creation
   const handleCreateEvent = async (e) => {
     e.preventDefault();
@@ -49,6 +54,7 @@ const AdminDashboard = () => {
     formData.append("location[latitude]", newEvent.location.latitude);
     formData.append("location[longitude]", newEvent.location.longitude);
     formData.append("date", newEvent.date);
+    formData.append("eventRadius", eventRadius);  // Add event radius
     if (newEvent.image) formData.append("image", newEvent.image);
 
     formData.forEach((value, key) => {
@@ -76,11 +82,11 @@ const AdminDashboard = () => {
       setModalMessage("Event created successfully!");
       setIsModalVisible(true);
       fetchPendingEvents(); // Refresh the list of pending events
-      setNewEvent({ title: "", description: "", location: { address: "", latitude: "", longitude: "" }, date: "", image: null }); // Reset form
+      setNewEvent({ title: "", description: "", location: { address: "", latitude: "", longitude: "" }, date: "",eventRadius: "", image: null }); // Reset form
     } catch (error) {
       console.error("Error:", error);
       setModalMessage("Failed to create event.");
-    setIsModalVisible(true);
+      setIsModalVisible(true);
     }
   };
 
@@ -121,6 +127,9 @@ const AdminDashboard = () => {
     .then(response => {
       if (response.ok) {
         console.log("Event approved!");
+        setModalMessage("Event has been successfully approved.");
+        setIsModalVisible(true);  // Show success message
+        setIsEditing(false); 
         fetchPendingEvents();
       } else {
         console.error("Failed to approve event");
@@ -131,10 +140,56 @@ const AdminDashboard = () => {
     fetchPendingEvents();
   };
 
+  
+
   // View Event (show event details in a modal or popup)
   const handleViewEvent = (event) => {
     setSelectedEvent(event);
   };
+
+  const loadGoogleMaps = () => {
+    if (!window.google) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBsnZGyHm-yRo3i4ISbsMz-Dmq5kuJy9I8&libraries=places`;
+      script.async = true;
+      script.onload = () => {
+        console.log('Google Maps API loaded');
+      };
+      document.head.appendChild(script);
+    }
+  };
+
+  useEffect(() => {
+      loadGoogleMaps();
+    }, []);
+
+  // Google Maps Initialization
+  const initMap = () => {
+    if (selectedEvent && selectedEvent.location) {
+      const map = new window.google.maps.Map(document.getElementById("map"), {
+        center: {
+          lat: selectedEvent.location.latitude,
+          lng: selectedEvent.location.longitude,
+        },
+        zoom: 12,
+      });
+
+      new window.google.maps.Marker({
+        position: {
+          lat: selectedEvent.location.latitude,
+          lng: selectedEvent.location.longitude,
+        },
+        map,
+        title: selectedEvent.title,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (selectedEvent) {
+      initMap();  // Initialize the map when the event is selected
+    }
+  }, [selectedEvent]);
 
   // Edit Event
   const handleEditEvent = (event) => {
@@ -220,6 +275,13 @@ const AdminDashboard = () => {
             onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
             required
           />
+          <input
+            type="number"
+            placeholder="Event Radius (meters)"
+            value={newEvent.eventRadius}
+            onChange={(e) => setEventRadius({...newEvent, eventRadius: e.target.value})}  // User input for radius
+            required
+          />
           <input type="file" accept="image/*" onChange={(e) => setNewEvent({ ...newEvent, image: e.target.files[0] })} />
           <button type="submit">Submit Event</button>
         </form>
@@ -232,7 +294,7 @@ const AdminDashboard = () => {
 
 
       {/* Display Pending Events */}
-      <h2>Pending Aid/Volunteer Events</h2>
+      <h2>Pending Aid/Volunteer/Disaster Events </h2>
       {pendingEvents.length === 0 ? (
         <p>No pending events</p>
       ) : (
@@ -256,6 +318,7 @@ const AdminDashboard = () => {
           <h2>Event Details: {selectedEvent.title}</h2>
           <p>{selectedEvent.description}</p>
           <p><strong>Location:</strong> {selectedEvent.location.address}</p>
+          <p><strong>Event Type:</strong> {selectedEvent.eventType}</p>
           <p><strong>Date:</strong> {new Date(selectedEvent.date).toLocaleDateString()}</p>
           <img src={`http://localhost:5001/${selectedEvent.image}`} alt={selectedEvent.title} className="event-image" />
           <div id="map" style={{ width: "100%", height: "300px" }}></div> {/* Google Map Placeholder */}
@@ -297,6 +360,10 @@ const AdminDashboard = () => {
             Approve Event
           </button>
         </div>
+      )}
+
+      {isModalVisible && (
+      <Modal message={modalMessage} onClose={() => setIsModalVisible(false)} />
       )}
 
       {/* Display Messages */}

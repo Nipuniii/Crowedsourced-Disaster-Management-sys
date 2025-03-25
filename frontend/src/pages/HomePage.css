@@ -1,239 +1,382 @@
-/* Ensure the page takes the full height of the viewport */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;  /* Center the content horizontally */
-    align-items: flex-start;  /* Align content to the top */
-    min-height: 2600px;  /* Ensure body stretches the entire height of the screen */
-    overflow-x: hidden;  /* Prevent horizontal scrolling */
-  }
-  
-  /* Main container for the home page */
-  .home-page {
-    /* width: 100%; */  
-    max-width: 2400px; /* Ensure a max-width for better layout control */
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin-top: 20px;
-    overflow: auto;  /* Allow scrolling if content overflows */
-    height: auto;
-    box-sizing: border-box;  /* Include padding in width/height calculations */
-  }
-  
-  /* Header Section */
-  .home-header {
-    margin-bottom: 30px;
-    padding: 20px 0;
-    background-color: #fff;
-  }
-  
-  .home-header h1 {
-    font-size: 2rem;
-    color: #4c739b;
-    margin-bottom: 20px;
-  }
-  
-  .home-header p {
-    font-size: 1.1rem;
-    color: #555;
-  }
-  
-  .auth-links-top {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-  }
-  
-  .auth-link {
-    font-size: 1rem;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .auth-link:hover {
-    color: #0056b3;
-  }
-  
-  /* Disaster Info Section */
-  .disaster-info {
-    margin-bottom: 40px;
-    padding-top: 30px;
-  }
-
-  h2{
+  /* Ensure the page takes the full height of the viewport */
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;  /* Center the content horizontally */
+      align-items: flex-start;  /* Align content to the top */
+      min-height: 2000px;  /* Ensure body stretches the entire height of the screen */
+      overflow-x: hidden;  /* Prevent horizontal scrolling */
+    }
     
+    /* Main container for the home page */
+    .home-page {
+      /* width: 100%; */  
+      height: 2200px;
+      max-width: 2600px; /* Ensure a max-width for better layout control */
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 20px;
+      overflow: auto; 
+      /* Allow scrolling if content overflows */
+      
+      box-sizing: border-box;  /* Include padding in width/height calculations */
+    }
+    
+    /* Header Section */
+    .home-header {
+      margin-bottom: 30px;
+      padding: 20px 0;
+      background-color: #fff;
+    }
+    
+    .home-header h1 {
+      font-size: 2rem;
+      color: #4c739b;
+      margin-bottom: 20px;
+    }
+    
+    .home-header p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+    
+    .auth-links-top {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+    
+    .auth-link {
+      font-size: 1rem;
+      color: #007bff;
+      text-decoration: none;
+    }
+    
+    .auth-link:hover {
+      color: #0056b3;
+    }
+    
+    /* Disaster Info Section */
+    .disaster-info {
+      margin-bottom: 40px;
+      padding-top: 30px;
+    }
+
+    h2{
+      
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #ff0000;
+    
+    }
+
+    .approved-events h2{
+      font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    
+    .disaster-info h2 {
       font-size: 1.8rem;
       margin-bottom: 20px;
       color: #4c739b;
-  
-  }
-  
-  .disaster-info h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #4c739b;
-  }
-  
-  .disaster-info p {
-    font-size: 1rem;
-    color: #555;
-  }
-  
-  .disaster-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .disaster-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 240px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .disaster-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  .disaster-card h3 {
-    font-size: 1.4rem;
-    color: #4c739b;
-    margin-bottom: 10px;
-  }
-  
-  .map-section {
-    width: 100%;
-    height: 400px; /* Ensure a height is set */
-    margin-top: 20px;
-  }
-  
-  .disaster-card p {
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.5;
-  }
-  
-  /* Management Tips Section */
-  .management-tips h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #4c739b;
-  }
-  
-  .management-tips ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .management-tips li {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  .management-tips strong {
-    color: #007bff;
-  }
-  
-  /* Footer */
-  .home-footer {
-    margin-top: 30px;
-    font-size: 0.9rem;
-    color: #888;
-  }
-  
-  /* View Details Button */
-  .view-details-button {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .view-details-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .event-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 240px; /* You can adjust this width */
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-  }
-  
-  .event-card img {
-    width: 100%; /* Ensure the image takes up full width of the card */
-    max-height: 200px; /* Set a max height to control the size */
-    object-fit: cover; /* Ensure the image maintains aspect ratio and covers the space */
-    border-radius: 8px; /* Optional: round the corners of the image */
-    margin-top: 10px; /* Add some space between image and text */
-  }
-  
-  .event-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
-  }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 768px) {
-    .home-page {
-      padding: 15px;
     }
-  
+    
+    .disaster-info p {
+      font-size: 1rem;
+      color: #555;
+    }
+    
     .disaster-list {
-      gap: 10px;
-      flex-direction: column;
-      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
-  
+    
     .disaster-card {
-      width: 100%;
-      max-width: 500px;
-    }
-  }
-  
-  /* Ensure the content fits well at all zoom levels */
-  @media (max-width: 1200px) {
-    .home-page {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
       padding: 20px;
+      width: 240px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-  
-    .disaster-card {
-      width: 220px;
+    
+    .disaster-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
-  
-    .home-header h1 {
-      font-size: 1.8rem;
+    
+    .disaster-card h3 {
+      font-size: 1.4rem;
+      color: #4c739b;
+      margin-bottom: 10px;
     }
-  }
-  
-  @media (max-width: 480px) {
-    .home-header h1 {
-      font-size: 1.5rem;
-    }
-  
-    .disaster-card {
+    
+    .map-section {
       width: 100%;
-      margin: 10px 0;
+      height: 400px; /* Ensure a height is set */
+      margin-top: 20px;
     }
-  }
-  
+
+    .comments-section {
+      margin-top: 20px;
+      color: #007bff;
+    }
+    
+    .disaster-card p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+    }
+    
+/* Preparedness Planning Section */
+.preparedness-planning {
+  margin-top: 40px;
+  padding: 20px;
+  color: #007bff;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;  /* Ensure text is left-aligned */
+}
+
+.preparedness-planning h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.preparedness-planning ul {
+  list-style-type: disc; /* Default bullet points */
+  padding-left: 20px;    /* Add left padding to the list */
+  text-align: left;      /* Ensure text is left-aligned */
+}
+
+.preparedness-planning ul ul {
+  list-style-type: circle; /* Indent sub-list with circle bullets */
+  padding-left: 20px;  /* Add indentation to sub-lists */
+}
+
+.preparedness-planning ul li {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.preparedness-planning li strong {
+  font-weight: bold;
+  color: #4c739b;
+}
+    
+    /* Container for the approved events cards */
+.approved-event-cards {
+  display: flex;
+  flex-wrap: wrap;  /* Allows the cards to wrap to the next line if needed */
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center the cards horizontally */
+  margin-top: 20px;
+}
+
+/* Each individual card */
+.event-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 240px;  /* You can adjust the card width as needed */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+/* Hover effect for each card */
+.event-card:hover {
+  transform: scale(1.05);  /* Zoom in the card on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  /* Make the shadow stronger on hover */
+}
+
+/* For images in the event cards */
+.event-card img {
+  width: 100%;  /* Ensure the image takes up the full width of the card */
+  max-height: 200px;  /* Set a max height for images */
+  object-fit: cover;  /* Maintain aspect ratio and cover the space */
+  border-radius: 8px;  /* Optional: Round the corners of the image */
+  margin-top: 10px;  /* Add space between image and text */
+}
+
+/* For the View Details button */
+.view-details-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.view-details-button:hover {
+  background-color: #0056b3;
+}
+    
+/* Container for the affected areas cards */
+.affected-area-cards {
+  display: flex;
+  flex-wrap: wrap;  /* Allows the cards to wrap to the next line if needed */
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center the cards horizontally */
+  margin-top: 20px;
+}
+
+/* Each individual card */
+.event-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 240px;  /* You can adjust the card width as needed */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+/* Hover effect for each card */
+.event-card:hover {
+  transform: scale(1.05);  /* Zoom in the card on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);  /* Make the shadow stronger on hover */
+}
+
+/* For images in the event cards */
+.event-card img {
+  width: 100%;  /* Ensure the image takes up the full width of the card */
+  max-height: 200px;  /* Set a max height for images */
+  object-fit: cover;  /* Maintain aspect ratio and cover the space */
+  border-radius: 8px;  /* Optional: Round the corners of the image */
+  margin-top: 10px;  /* Add space between image and text */
+}
+
+/* Alert message with red background */
+.alert-message {
+  background-color: #ff4d4d;  /* Red background */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem;
+  margin-bottom: 10px; /* Add some spacing between the message and footer */
+}
+
+/* Footer Style */
+.home-footer {
+  background-color: #007bff;  /* Blue background */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.home-footer p {
+  margin: 0;
+}
+
+.home-footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.home-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Footer contact info section */
+.footer-contact-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+/* Footer links section */
+.footer-links p {
+  margin: 5px 0;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+    
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .home-page {
+        padding: 15px;
+      }
+    
+      .disaster-list {
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+      }
+    
+      .disaster-card {
+        width: 100%;
+        max-width: 500px;
+      }
+      .home-footer {
+        font-size: 0.85rem;
+        padding: 15px;
+      }
+      .footer-contact-info,
+      .footer-links {
+        text-align: left;
+      }
+
+      .footer-contact-info p,
+      .footer-links p {
+         margin-left: 10px;
+      }
+    }
+    
+    /* Ensure the content fits well at all zoom levels */
+    @media (max-width: 1200px) {
+      .home-page {
+        padding: 20px;
+      }
+    
+      .disaster-card {
+        width: 220px;
+      }
+    
+      .home-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .home-header h1 {
+        font-size: 1.5rem;
+      }
+    
+      .disaster-card {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+    

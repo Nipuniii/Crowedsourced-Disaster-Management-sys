@@ -6,8 +6,8 @@ body {
 }
 
 .dashboard-container {
-  max-width: 1500px;
-  height: 1400px;
+  min-width: 1000px;
+  height: 1200px;
   margin: 30px auto;
   padding: 20px;
   background: white;
@@ -30,11 +30,12 @@ body {
 
 .create-event-container {
   background-color: #ffffff;
+
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  margin: 0 auto;
+  width: 90%;
+  margin: 0 0 20px 0;
 }
 
 .create-event-container form {
@@ -153,22 +154,41 @@ body {
   background-color: #218838;
 }
 
-/* Event Details Popup */
 .event-details-popup {
   position: fixed;
   top: 10%;
   left: 10%;
+  color: #007bff;
   background-color: white;
   padding: 20px;
   width: 80%;
-  height: 60%;
+  height: 100%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
 .event-details-popup img {
-  width: 100%;
-  height: auto;
+  width: 400px;  /* Ensure the image takes up the full width of the card */
+  max-height: 200px;  /* Set a max height for images */
+  object-fit: cover;  /* Maintain aspect ratio and cover the space */
+  border-radius: 8px;  /* Optional: Round the corners of the image */
+  margin-top: 10px; 
+}
+
+.event-details-popup button {
+  background-color: #dc3545; /* Red color for Close */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.event-details-popup button:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
 .message {
@@ -178,17 +198,20 @@ body {
 
 .logout-button {
   margin-top: 20px;
+  margin-left: 190px;
   padding: 12px 20px;
+  height: 80px;
+  width: 200px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
 .logout-button:hover {
-  background-color: #0056b3;
+  background-color: #ff0000;
 }
 
 button {

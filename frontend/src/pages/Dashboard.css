@@ -1,28 +1,28 @@
 /* General Styles */
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Center vertically */
+  font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;  /* Center the content horizontally */
+      align-items: flex-start;  /* Align content to the top */
+      min-height: 2500px;  
+      overflow-x: hidden;
 }
 
 /* Dashboard Container */
 .dashboard-container {
-  max-width: 1200px;
-  width: 100%;
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  align-items: center;
-  text-align: center;
+      min-height: 2200px;
+      max-width: 2600px; /* Ensure a max-width for better layout control */
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 20px;
+      overflow: auto; 
+      box-sizing: border-box; 
 }
 
 /* Header Section */
@@ -78,6 +78,7 @@ h4{
 .event-form-container {
   flex: 1;
   min-width: 280px; /* Allowing form container to be responsive */
+  max-height: 900px;
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
@@ -104,6 +105,11 @@ h4{
   box-sizing: border-box;
 }
 
+.event-form label{
+  font-size: 1.2rem;
+  color: #007bff;
+}
+
 .event-form button {
   width: 100%;
   padding: 12px 20px;
@@ -120,12 +126,19 @@ h4{
   background-color: #0056b3;
 }
 
+/* Adjusting layout for event-list */
 .event-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 20px;
-  justify-content: center;
   margin-top: 20px;
+  align-items: center;
+}
+
+.event-list h2 {
+  font-size: 1.6rem;
+  color: #007bff;
+  margin-bottom: 20px; /* Adding some space between heading and cards */
 }
 
 .event-card {
@@ -169,18 +182,10 @@ h4{
   background-color: #0056b3;
 }
 
-
-/* General Comment Section */
+/* Comments Section */
 .comments-section {
   margin-top: 20px;
-}
-
-.comment {
-  background-color: #f8f9fa;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #007bff;
 }
 
 .comment-input {
@@ -213,7 +218,6 @@ h4{
   background-color: #0056b3;
 }
 
-/* Style for "No comments yet" text */
 .comment p {
   color: #555;
   font-style: italic;
@@ -228,7 +232,7 @@ h4{
   margin-top: 20px;
   border-radius: 5px;
   text-align: center;
-  animation: fadeOut 5s forwards;
+  animation: fadeOut 15s forwards;
 }
 
 @keyframes fadeOut {
@@ -243,8 +247,8 @@ h4{
 /* Logout Button - Out of the Main Container */
 .logout-button {
   margin-top: 30px;
-  padding: 12px 20px;
-  background-color: #dc3545;
+  padding: 24px 40px;
+  background-color: #fa5a6a;
   color: white;
   border: none;
   border-radius: 8px;
@@ -252,7 +256,7 @@ h4{
   cursor: pointer;
   transition: background-color 0.3s ease;
   bottom: 30px;
-  left: 50%;
+  left: 60%;
   transform: translateX(-50%);
 }
 
@@ -260,14 +264,80 @@ h4{
   background-color: #c82333;
 }
 
-/* Footer */
-footer {
-  margin-top: 50px;
+/* Alert message with red background */
+.alert-message {
+  background-color: #ff4d4d;  /* Red background */
+  color: white;
   text-align: center;
-  font-size: 0.8rem;
-  color: #888;
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  font-size: 1rem;
+  margin-top: 20px;
+  margin-bottom: 10px; /* Add some spacing between the message and footer */
 }
 
-footer p {
+/* Footer Style */
+.home-footer {
+  background-color: #007bff;  /* Blue background */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.home-footer p {
   margin: 0;
 }
+
+.home-footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.home-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Footer contact info section */
+.footer-contact-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+/* Footer links section */
+.footer-links p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home-footer {
+    font-size: 0.85rem;
+    padding: 15px;
+  }
+
+  .footer-contact-info,
+  .footer-links {
+    text-align: left;
+  }
+
+  .footer-contact-info p,
+  .footer-links p {
+    margin-left: 10px;
+  }
+}
+

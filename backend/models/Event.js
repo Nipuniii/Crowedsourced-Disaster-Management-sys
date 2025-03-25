@@ -22,9 +22,14 @@ const EventSchema = new mongoose.Schema({
   image: { type: String, required: false }, // Optional image URL
   eventType: { 
     type: String, 
-    enum: ["volunteer", "aid"], 
+    enum: ["volunteer", "aid", "disaster"], 
     required: true 
-  }, // Event type (volunteer or aid)
+  },// Event type (volunteer or aid)
+  eventRadius: { 
+    type: Number, 
+    required: true, 
+    min: 0 // Radius must be a positive number
+  }, 
   createdBy: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: "User", 

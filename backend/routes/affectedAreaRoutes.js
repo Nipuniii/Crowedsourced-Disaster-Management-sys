@@ -30,10 +30,10 @@ router.post("/create", authMiddleware, adminMiddleware, upload.single("image"), 
     console.log("Form Data:", req.body);  // Log the form data
     console.log("Uploaded File:", req.file);  // Log the file
 
-    const { title, description, location ,date} = req.body;
+    const { title, description, location ,date, eventRadius} = req.body;
     const image = req.file ? req.file.path : null;
 
-    if (!title || !description || !location || !location.address || !location.latitude || !location.longitude, !date) {
+    if (!title || !description || !location || !location.address || !location.latitude || !location.longitude, !date, !eventRadius) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -43,6 +43,7 @@ router.post("/create", authMiddleware, adminMiddleware, upload.single("image"), 
       location,
       image,
       date,
+      eventRadius,
       createdBy: req.user.id,
     });
 
