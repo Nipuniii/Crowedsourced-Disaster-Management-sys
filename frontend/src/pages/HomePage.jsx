@@ -20,6 +20,16 @@ const HomePage = () => {
         if (res.ok) {
           setApprovedEvents(data);
           // initMap(data); 
+
+          // Fetch comments for each event
+      const EventsWithComments = await Promise.all(data.map(async (event) => {
+        const commentsRes = await fetch(`http://localhost:5001/api/comments/event/${event._id}`);
+        const commentsData = await commentsRes.json();
+        event.comments = commentsData;  // Attach comments to each event
+        return event;
+      }));
+  
+      setApprovedEvents(EventsWithComments);
         }
       } catch (error) {
         console.error("Error fetching approved events:", error);
@@ -311,6 +321,19 @@ const HomePage = () => {
                 <p><strong>Location:</strong> {event.location.address}</p>
                 <p><strong>Event Type:</strong> {event.eventType}</p>
                 <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+                {/* Comments Section */}
+              <div className="comments-section">
+                <h4>Comments</h4>
+                {event.comments && event.comments.length > 0 ? (
+                  event.comments.map((comment) => (
+            <div key={comment._id}>
+              <strong>{comment.user.name}:</strong> {comment.text}
+            </div>
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
+          </div>
                 {/* <a href={`/event/${event._id}`} className="view-details-button">View Details</a> */}
               </div>
             ))

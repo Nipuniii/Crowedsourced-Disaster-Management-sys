@@ -32,11 +32,22 @@ const Dashboard = () => {
       }
       const data = await response.json();
       setEvents(data);
+  
+      // Fetch comments for each event
+      const EventsWithComments = await Promise.all(data.map(async (event) => {
+        const commentsRes = await fetch(`http://localhost:5001/api/comments/event/${event._id}`);
+        const commentsData = await commentsRes.json();
+        event.comments = commentsData;  // Attach comments to each event
+        return event;
+      }));
+  
+      setEvents(EventsWithComments);
     } catch (error) {
       console.error("Error fetching events:", error);
       setMessage("Failed to load approved events.");
     }
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -140,17 +151,24 @@ const Dashboard = () => {
     }
   };
 
-  const handleAddComment = async (affectedAreaId) => {
+  const handleAddComment = async (affectedAreaId , eventId) => {
     if (!newComment.trim()) {
       setMessage("Comment cannot be empty.");
       return;
     }
 
+     // Log the data to ensure it's correct
+  console.log('Adding comment with data:', {
+    text: newComment,
+    affectedArea: affectedAreaId,
+    event: eventId,
+  });
+
     const token = localStorage.getItem("token");
     const commentData = {
       text: newComment,
-      affectedArea: affectedAreaId,
-      event: null
+      affectedArea: affectedAreaId || null,
+      event: eventId || null,  // Null for affected areas (if no event)
     };
     const res = await fetch("http://localhost:5001/api/comments/add", {
       method: "POST",
@@ -243,7 +261,7 @@ const Dashboard = () => {
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment"
             />
-            <button onClick={() => handleAddComment(area._id)}>Add Comment</button>
+            <button onClick={() => handleAddComment(area._id, null)}>Add Comment</button> {/* Pass area._id for affected area-based comments */}
           </div>
         )}
         {!user && <p>Please log in to add comments.</p>}
@@ -254,21 +272,47 @@ const Dashboard = () => {
 
 
 
-        <div className="approved-events-container">
-          <h2>Approved Aid/Volunteer/Disaster Events</h2>
-          <div className="event-list">
-            {events.map(event => (
-              <div key={event._id} className="event-card">
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-                <p><strong>Location:</strong> {event.location.address}</p>
-                <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-                {event.image && <img src={`http://localhost:5001/${event.image}`} alt={event.title} className="event-image" />}
-                <button>View Details</button>
+<div className="approved-events-container">
+  <h2>Approved Aid/Volunteer/Disaster Events</h2>
+  <div className="event-list">
+    {events.map((event) => (
+      <div key={event._id} className="event-card">
+        <h3>{event.title}</h3>
+        <p>{event.description}</p>
+        <p><strong>Location:</strong> {event.location.address}</p>
+        <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
+        {event.image && <img src={`http://localhost:5001/${event.image}`} alt={event.title} className="event-image" />}
+        
+        <div className="comments-section">
+          <h4>Comments</h4>
+          {event.comments && event.comments.length > 0 ? (
+            event.comments.map((comment) => (
+              <div key={comment._id}>
+                <strong>{comment.user.name}:</strong> {comment.text}
               </div>
-            ))}
-          </div>
+            ))
+          ) : (
+            <p>No comments yet.</p>
+          )}
+
+          {/* Comment Input */}
+          {user && (
+            <div className="comment-input">
+              <textarea 
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment"
+              />
+              <button onClick={() => handleAddComment(null, event._id)}>Add Comment</button> {/* Pass null for affectedArea and event._id for event-based comments */}
+            </div>
+          )}
+          {!user && <p>Please log in to add comments.</p>}
         </div>
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
 
       <button onClick={handleLogout} className="logout-button">Logout</button>
