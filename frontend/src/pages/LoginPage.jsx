@@ -40,6 +40,7 @@ function LoginPage() {
         <button type="submit">Login</button>
         {error && <p className="error-message">{error}</p>}
       </form>
+      <p>Don't have an account? <a href="/register">Register here</a></p> {/* Link to registration page */}
       </div>
     </div>
   );

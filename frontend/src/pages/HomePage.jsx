@@ -216,9 +216,9 @@ const HomePage = () => {
         <p>Your resource for disaster preparedness, response, and recovery.</p>
         <header className="home-header">
         <div className="auth-link-top">
-          <Link to="/login" className="auth-link">Login</Link>
-          <Link to="/register" className="auth-link">Register</Link>
-          </div>
+          <Link to="/login" className="auth-link login-button">Login</Link>
+          <Link to="/register" className="auth-link register-button">Register</Link>
+        </div>
           </header>
         <h2>Natural Disasters in Sri Lanka</h2>
         <p>Sri Lanka is vulnerable to a variety of natural disasters, which have profound impacts on the economy, infrastructure, and population. Understanding these disasters is crucial for effective disaster management and preparedness.</p>

@@ -42,6 +42,7 @@ function RegisterPage() {
         <button type="submit">Register</button>
         {error && <p className="error-message">{error}</p>}
       </form>
+      <p>Already have an account? <a href="/login">Login here</a></p>
       </div>
     </div>
   );

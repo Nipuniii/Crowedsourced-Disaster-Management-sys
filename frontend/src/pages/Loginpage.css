@@ -1,3 +1,4 @@
+/* Reset margin and padding for body to avoid unexpected space */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -5,24 +6,28 @@ body {
   background-color: #f4f4f4;
   display: flex;
   justify-content: center;  /* Center horizontally */
-  align-items: center;  /* Center vertically */
-  height: 100vh;  /* Full viewport height */
+  align-items: flex-start;  /* Align the content to the top of the page */
+  min-height: 400px; /* Use full height of the viewport */
+  padding-top: 0; /* Remove top padding to avoid unwanted space */
 }
 
+/* This ensures the container takes the available height */
 .auth-container {
   display: flex;
   justify-content: center;  /* Center horizontally */
-  align-items: center;  /* Center vertically */
-  height: 100%;  /* Ensure full height of the viewport */
-  width: 100%;  /* Ensure full width of the viewport */
+  align-items: center; /* Center vertically within the screen */
+  height: 300px;  /* Make it take the full height */
 }
 
+/* Styling the auth-box */
 .auth-box {
   background: white;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  min-width: 350px; /* Increased minimum width for a cleaner look */
+  min-width: 350px; /* Minimum width of the form */
+  width: 100%;
+  max-width: 400px;  /* Restrict the form width */
   text-align: center;
 }
 
@@ -52,6 +57,7 @@ body {
 .auth-container button {
   width: 100%;
   padding: 12px;
+  margin-top: 10px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -69,4 +75,23 @@ body {
   color: #f44336;
   font-size: 0.9rem;
   margin-top: 10px;
+}
+
+/* Styling for the "Don't have an account? Register here" section */
+.auth-box p {
+  font-size: 1rem;
+  margin-top: 15px;
+  color: #555;
+}
+
+.auth-box p a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.auth-box p a:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
